@@ -19,12 +19,50 @@ class Channel:
         channel = self.youtube.channels().list(
             id=self.__channel_id, part='snippet,statistics').execute()
 
+        #название канала
         self.title = channel['items'][0]['snippet']['title']
+        #описание
         self.description = channel['items'][0]['snippet']['description']
+        #количество просмотров
         self.view_count = channel['items'][0]['statistics']['viewCount']
-        self.subscriber_count = channel['items'][0]['statistics']['subscriberCount']
+        #количество подписчиков
+        self.subscriber_count = int(channel['items'][0]['statistics']['subscriberCount'])
+        #количество видео
         self.video_count = channel['items'][0]['statistics']['videoCount']
+        #ссылка на канал
         self.url = f'https://www.youtube.com/channel/{self.__channel_id}'
+
+
+    def __str__(self):
+        return f'{self.title} ({self.url})'
+
+
+    def __add__(self, other):
+        """сложение количества подписчиков"""
+        return self.subscriber_count + other.subscriber_count
+
+
+    def __sub__(self, other):
+        """вычитание количества подписчиков"""
+        return self.subscriber_count - other.subscriber_count
+
+
+    def __gt__(self, other):
+        """
+        Если количество подписчиков 1 канала больше
+        количества 2 канала return True.
+        Если меньше, False
+        """
+        return self.subscriber_count > other.subscriber_count
+
+
+    def __ge__(self, other):
+        """
+        Если количество подписчиков 1 канала больше или равно
+        количества 2 канала return True.
+        Если меньше, False
+        """
+        return self.subscriber_count >= other.subscriber_count
 
 
     @property
