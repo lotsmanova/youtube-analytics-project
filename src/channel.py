@@ -34,6 +34,7 @@ class Channel:
 
 
     def __str__(self):
+        """Магический метод для строкового представления объекта"""
         return f'{self.title} ({self.url})'
 
 
