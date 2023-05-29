@@ -10,19 +10,27 @@ class Video:
 
     def __init__(self, id_video: str) -> None:
         """Инициализация экземпляра"""
-        # id видео
-        self.__id_video = id_video
-        video_response = self.youtube.videos().list(
-            part='snippet,statistics,contentDetails,topicDetails', id=self.__id_video).execute()
+        try:
+            # id видео
+            self.__id_video = id_video
+            video_response = self.youtube.videos().list(
+                part='snippet,statistics,contentDetails,topicDetails', id=self.__id_video).execute()
 
-        # название видео
-        self.title = video_response['items'][0]['snippet']['title']
-        # ссылка на видео
-        self.url = f'https://www.youtube.com/channel/{self.__id_video}'
-        # количество просмотров
-        self.view_count = video_response['items'][0]['statistics']['viewCount']
-        # количество лайков
-        self.like_count = video_response['items'][0]['statistics']['likeCount']
+            # название видео
+            self.title = video_response['items'][0]['snippet']['title']
+            # ссылка на видео
+            self.url = f'https://www.youtube.com/channel/{self.__id_video}'
+            # количество просмотров
+            self.view_count = video_response['items'][0]['statistics']['viewCount']
+            # количество лайков
+            self.like_count = video_response['items'][0]['statistics']['likeCount']
+        except IndexError:
+            print('Неверный id видео')
+
+            self.title = None
+            self.url = None
+            self.view_count = None
+            self.like_count = None
 
 
     def __str__(self) -> str:
