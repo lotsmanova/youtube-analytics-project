@@ -10,12 +10,13 @@ class Video:
 
     def __init__(self, id_video: str) -> None:
         """Инициализация экземпляра"""
-        try:
-            # id видео
-            self.__id_video = id_video
-            video_response = self.youtube.videos().list(
-                part='snippet,statistics,contentDetails,topicDetails', id=self.__id_video).execute()
 
+        # id видео
+        self.__id_video = id_video
+        video_response = self.youtube.videos().list(
+            part='snippet,statistics,contentDetails,topicDetails', id=self.__id_video).execute()
+
+        try:
             # название видео
             self.title = video_response['items'][0]['snippet']['title']
             # ссылка на видео
