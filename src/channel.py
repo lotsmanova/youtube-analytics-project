@@ -15,19 +15,19 @@ class Channel:
         """Инициализация экземпляра"""
         self.__channel_id = channel_id
 
-        channel = self.youtube.channels().list(
+        self.channel = self.youtube.channels().list(
             id=self.__channel_id, part='snippet,statistics').execute()
 
         # название канала
-        self.title = channel['items'][0]['snippet']['title']
+        self.title = self.channel['items'][0]['snippet']['title']
         # описание
-        self.description = channel['items'][0]['snippet']['description']
+        self.description = self.channel['items'][0]['snippet']['description']
         # количество просмотров
-        self.view_count = channel['items'][0]['statistics']['viewCount']
+        self.view_count = self.channel['items'][0]['statistics']['viewCount']
         # количество подписчиков
-        self.subscriber_count = int(channel['items'][0]['statistics']['subscriberCount'])
+        self.subscriber_count = int(self.channel['items'][0]['statistics']['subscriberCount'])
         # количество видео
-        self.video_count = channel['items'][0]['statistics']['videoCount']
+        self.video_count = self.channel['items'][0]['statistics']['videoCount']
         # ссылка на канал
         self.url = f'https://www.youtube.com/channel/{self.__channel_id}'
 
@@ -73,10 +73,10 @@ class Channel:
 
     def print_info(self) -> None:
         """Выводит в консоль информацию о канале."""
-        channel = self.youtube.channels().list(
-            id = self.__channel_id,part = 'snippet,statistics').execute()
-        print(channel)
-
+        # channel = self.youtube.channels().list(
+        #     id = self.__channel_id, part = 'snippet,statistics').execute()
+        # print(channel)
+        print(self.channel)
 
     @classmethod
     def get_service(cls) -> object:
